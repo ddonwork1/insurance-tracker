@@ -8,81 +8,115 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 210 17% 98%;
+    --foreground: 213 31% 9%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 213 31% 9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 213 31% 9%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 214 84% 56%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 214 84% 48%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 210 16% 93%;
+    --secondary-foreground: 213 31% 9%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 210 16% 93%;
+    --muted-foreground: 213 19% 46%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 156 73% 59%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
 
-    --radius: 0.5rem;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 214 84% 56%;
+
+    --radius: 0.75rem;
+
+    /* Insurance app specific colors */
+    --trust-blue: 214 84% 56%;
+    --financial-green: 156 73% 59%;
+    --alert-red: 0 72% 51%;
+    --warning-amber: 38 92% 50%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(214 84% 56%), hsl(214 84% 48%));
+    --gradient-success: linear-gradient(135deg, hsl(156 73% 59%), hsl(142 76% 36%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(210 16% 98%));
+    
+    /* Shadows */
+    --shadow-card: 0 4px 6px -1px hsl(213 31% 9% / 0.1);
+    --shadow-dropdown: 0 10px 15px -3px hsl(213 31% 9% / 0.1);
+    --shadow-modal: 0 25px 50px -12px hsl(213 31% 9% / 0.25);
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 213 27% 8%;
+    --foreground: 210 17% 98%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 213 25% 10%;
+    --card-foreground: 210 17% 98%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 213 25% 10%;
+    --popover-foreground: 210 17% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 214 84% 56%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 214 84% 48%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 213 19% 14%;
+    --secondary-foreground: 210 17% 98%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 213 19% 14%;
+    --muted-foreground: 213 13% 65%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 156 73% 59%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 213 19% 18%;
+    --input: 213 19% 18%;
+    --ring: 214 84% 56%;
+
+    /* Dark mode gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(214 84% 56%), hsl(214 84% 48%));
+    --gradient-success: linear-gradient(135deg, hsl(156 73% 59%), hsl(142 76% 36%));
+    --gradient-card: linear-gradient(145deg, hsl(213 25% 12%), hsl(213 25% 10%));
+    
+    /* Dark mode shadows */
+    --shadow-card: 0 4px 6px -1px hsl(0 0% 0% / 0.3);
+    --shadow-dropdown: 0 10px 15px -3px hsl(0 0% 0% / 0.3);
+    --shadow-modal: 0 25px 50px -12px hsl(0 0% 0% / 0.5);
+
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
