@@ -14,7 +14,175 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      insurance_policies: {
+        Row: {
+          agent_email: string | null
+          agent_name: string | null
+          agent_phone: string | null
+          coverage_amount: number | null
+          created_at: string
+          expiry_date: string
+          id: string
+          insured_name: string
+          insurer_name: string
+          notes: string | null
+          policy_number: string
+          policy_type: string
+          premium_amount: number
+          start_date: string
+          status: string
+          updated_at: string
+          user_id: string
+          vehicle_details: string | null
+        }
+        Insert: {
+          agent_email?: string | null
+          agent_name?: string | null
+          agent_phone?: string | null
+          coverage_amount?: number | null
+          created_at?: string
+          expiry_date: string
+          id?: string
+          insured_name: string
+          insurer_name: string
+          notes?: string | null
+          policy_number: string
+          policy_type: string
+          premium_amount: number
+          start_date: string
+          status?: string
+          updated_at?: string
+          user_id: string
+          vehicle_details?: string | null
+        }
+        Update: {
+          agent_email?: string | null
+          agent_name?: string | null
+          agent_phone?: string | null
+          coverage_amount?: number | null
+          created_at?: string
+          expiry_date?: string
+          id?: string
+          insured_name?: string
+          insurer_name?: string
+          notes?: string | null
+          policy_number?: string
+          policy_type?: string
+          premium_amount?: number
+          start_date?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+          vehicle_details?: string | null
+        }
+        Relationships: []
+      }
+      policy_documents: {
+        Row: {
+          file_name: string
+          file_path: string
+          file_size: number | null
+          id: string
+          mime_type: string | null
+          policy_id: string
+          uploaded_at: string
+        }
+        Insert: {
+          file_name: string
+          file_path: string
+          file_size?: number | null
+          id?: string
+          mime_type?: string | null
+          policy_id: string
+          uploaded_at?: string
+        }
+        Update: {
+          file_name?: string
+          file_path?: string
+          file_size?: number | null
+          id?: string
+          mime_type?: string | null
+          policy_id?: string
+          uploaded_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "policy_documents_policy_id_fkey"
+            columns: ["policy_id"]
+            isOneToOne: false
+            referencedRelation: "insurance_policies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          phone: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      reminders: {
+        Row: {
+          created_at: string
+          days_before: number
+          id: string
+          policy_id: string
+          reminder_date: string
+          sent_at: string | null
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          days_before: number
+          id?: string
+          policy_id: string
+          reminder_date: string
+          sent_at?: string | null
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          days_before?: number
+          id?: string
+          policy_id?: string
+          reminder_date?: string
+          sent_at?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reminders_policy_id_fkey"
+            columns: ["policy_id"]
+            isOneToOne: false
+            referencedRelation: "insurance_policies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
