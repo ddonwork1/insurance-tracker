@@ -1,7 +1,8 @@
 import { ReactNode, useEffect } from "react";
-import { useAuth } from "@/hooks/useAuth";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Navbar } from "@/components/Navbar";
+import { useAuth } from "@/hooks/useAuth";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/AppSidebar";
 
 interface LayoutProps {
   children: ReactNode;
@@ -38,12 +39,23 @@ const Layout = ({ children }: LayoutProps) => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navbar />
-      <main className="container mx-auto px-4 py-6 pt-20">
-        {children}
-      </main>
-    </div>
+    <SidebarProvider>
+      <div className="min-h-screen w-full bg-background">
+        <header className="h-12 flex items-center border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
+          <SidebarTrigger className="ml-4" />
+          <div className="ml-4">
+            <h2 className="text-lg font-semibold">Insurance Tracker</h2>
+          </div>
+        </header>
+        
+        <div className="flex min-h-[calc(100vh-3rem)] w-full">
+          <AppSidebar />
+          <main className="flex-1 overflow-auto p-6">
+            {children}
+          </main>
+        </div>
+      </div>
+    </SidebarProvider>
   );
 };
 

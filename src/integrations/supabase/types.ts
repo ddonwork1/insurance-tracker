@@ -14,6 +14,94 @@ export type Database = {
   }
   public: {
     Tables: {
+      claim_documents: {
+        Row: {
+          claim_id: string
+          file_name: string
+          file_path: string
+          file_size: number | null
+          id: string
+          mime_type: string | null
+          uploaded_at: string
+        }
+        Insert: {
+          claim_id: string
+          file_name: string
+          file_path: string
+          file_size?: number | null
+          id?: string
+          mime_type?: string | null
+          uploaded_at?: string
+        }
+        Update: {
+          claim_id?: string
+          file_name?: string
+          file_path?: string
+          file_size?: number | null
+          id?: string
+          mime_type?: string | null
+          uploaded_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "claim_documents_claim_id_fkey"
+            columns: ["claim_id"]
+            isOneToOne: false
+            referencedRelation: "claims"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      claims: {
+        Row: {
+          claim_amount: number
+          claim_date: string
+          claim_number: string
+          claim_status: string
+          created_at: string
+          description: string | null
+          id: string
+          notes: string | null
+          policy_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          claim_amount: number
+          claim_date: string
+          claim_number: string
+          claim_status?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          notes?: string | null
+          policy_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          claim_amount?: number
+          claim_date?: string
+          claim_number?: string
+          claim_status?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          notes?: string | null
+          policy_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "claims_policy_id_fkey"
+            columns: ["policy_id"]
+            isOneToOne: false
+            referencedRelation: "insurance_policies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       global_logs: {
         Row: {
           action: string

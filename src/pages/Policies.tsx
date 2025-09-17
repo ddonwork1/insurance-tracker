@@ -1,43 +1,32 @@
 import { useState } from "react";
-import { useAuth } from "@/hooks/useAuth";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { 
-  Plus,
-  Search,
-  Filter,
-  Car,
-  Heart,
-  Eye,
-  Edit,
-  Trash2
-} from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Plus, Eye, Edit, Trash2, FileText, Search, Filter, Car, Heart } from "lucide-react";
 import { formatDateDDMMYYYY } from "@/lib/dateUtils";
-import { formatINRSimple } from "@/lib/currencyUtils";
+import { formatINR } from "@/lib/currencyUtils";
 import { useToast } from "@/hooks/use-toast";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import PolicyForm from "@/components/PolicyFormModal";
 
 const Policies = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
-  
+  const queryClient = useQueryClient();
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState("all");
   const [filterStatus, setFilterStatus] = useState("all");
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const [editingPolicy, setEditingPolicy] = useState<any>(null);
 
-  const { data: policies, isLoading, refetch } = useQuery({
+  const { data: policies, isLoading } = useQuery({
     queryKey: ["policies", user?.id],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -80,7 +69,7 @@ const Policies = () => {
         description: "Policy deleted successfully.",
       });
       
-      refetch();
+      queryClient.invalidateQueries({ queryKey: ["policies"] });
     } catch (error) {
       toast({
         title: "Error",
@@ -123,7 +112,6 @@ const Policies = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold">Insurance Policies</h1>
@@ -131,16 +119,51 @@ const Policies = () => {
             Manage all your insurance policies in one place
           </p>
         </div>
-        <Button 
-          onClick={() => navigate("/policies/new")}
-          className="bg-gradient-primary hover:opacity-90"
-        >
-          <Plus className="h-4 w-4 mr-2" />
-          Add Policy
-        </Button>
+        
+        <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
+          <DialogTrigger asChild>
+            <Button>
+              <Plus className="h-4 w-4 mr-2" />
+              Add Policy
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>Add New Policy</DialogTitle>
+              <DialogDescription>
+                Fill in the policy details below
+              </DialogDescription>
+            </DialogHeader>
+            <PolicyForm 
+              onSuccess={() => {
+                setIsAddDialogOpen(false);
+                queryClient.invalidateQueries({ queryKey: ["policies"] });
+              }}
+            />
+          </DialogContent>
+        </Dialog>
+
+        <Dialog open={!!editingPolicy} onOpenChange={(open) => !open && setEditingPolicy(null)}>
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>Edit Policy</DialogTitle>
+              <DialogDescription>
+                Update the policy details below
+              </DialogDescription>
+            </DialogHeader>
+            {editingPolicy && (
+              <PolicyForm 
+                policyId={editingPolicy.id}
+                onSuccess={() => {
+                  setEditingPolicy(null);
+                  queryClient.invalidateQueries({ queryKey: ["policies"] });
+                }}
+              />
+            )}
+          </DialogContent>
+        </Dialog>
       </div>
 
-      {/* Filters */}
       <Card className="shadow-card">
         <CardContent className="pt-6">
           <div className="flex flex-col lg:flex-row gap-4">
@@ -178,7 +201,6 @@ const Policies = () => {
         </CardContent>
       </Card>
 
-      {/* Policies List */}
       {!filteredPolicies?.length ? (
         <Card className="shadow-card">
           <CardContent className="py-12 text-center">
@@ -193,7 +215,7 @@ const Policies = () => {
               }
             </p>
             <Button 
-              onClick={() => navigate("/policies/new")}
+              onClick={() => setIsAddDialogOpen(true)}
               className="bg-gradient-primary hover:opacity-90"
             >
               <Plus className="h-4 w-4 mr-2" />
@@ -224,8 +246,8 @@ const Policies = () => {
                         <p className="text-sm text-muted-foreground">{policy.vehicle_details}</p>
                       )}
                       <div className="flex items-center gap-4 text-sm">
-                         <span>Premium: {formatINRSimple(Number(policy.premium_amount))}</span>
-                         <span>Expires: {formatDateDDMMYYYY(policy.expiry_date)}</span>
+                        <span>Premium: {formatINR(Number(policy.premium_amount))}</span>
+                        <span>Expires: {formatDateDDMMYYYY(policy.expiry_date)}</span>
                       </div>
                     </div>
                   </div>
@@ -243,7 +265,7 @@ const Policies = () => {
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => navigate(`/policies/${policy.id}/edit`)}
+                        onClick={() => setEditingPolicy(policy)}
                       >
                         <Edit className="h-4 w-4" />
                       </Button>

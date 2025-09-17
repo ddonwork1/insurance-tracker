@@ -8,10 +8,11 @@ import Layout from "@/components/Layout";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Policies from "./pages/Policies";
-import PolicyForm from "./pages/PolicyForm";
 import PolicyDetail from "./pages/PolicyDetail";
+import Claims from "./pages/Claims";
 import GlobalLogs from "./pages/GlobalLogs";
 import UserManagement from "./pages/UserManagement";
+import Backup from "./pages/Backup";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,11 +29,11 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/policies" element={<Policies />} />
-              <Route path="/policies/new" element={<PolicyForm />} />
               <Route path="/policies/:id" element={<PolicyDetail />} />
-              <Route path="/policies/:id/edit" element={<PolicyForm />} />
+              <Route path="/claims" element={<Claims />} />
               <Route path="/logs" element={<GlobalLogs />} />
               <Route path="/users" element={<UserManagement />} />
+              <Route path="/backup" element={<Backup />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Layout>
