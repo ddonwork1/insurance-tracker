@@ -9,14 +9,16 @@ import {
   Shield, 
   AlertTriangle, 
   CheckCircle, 
-  DollarSign,
+  Car,
+  Heart,
   Plus,
   Calendar,
-  Car,
-  Heart
+  IndianRupee
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { format, isWithinInterval, addDays } from "date-fns";
+import { formatDateDDMMYYYY } from "@/lib/dateUtils";
+import { formatINRSimple } from "@/lib/currencyUtils";
 
 const Index = () => {
   const { user } = useAuth();
@@ -37,7 +39,8 @@ const Index = () => {
       const next30Days = addDays(today, 30);
 
       const activePolicies = policies?.filter(p => p.status === "active") || [];
-      const expiredPolicies = policies?.filter(p => p.status === "expired") || [];
+      const motorPolicies = policies?.filter(p => p.policy_type === "motor") || [];
+      const healthPolicies = policies?.filter(p => p.policy_type === "health") || [];
       const upcomingRenewals = activePolicies.filter(p => 
         isWithinInterval(new Date(p.expiry_date), { start: today, end: next30Days })
       );
@@ -45,8 +48,8 @@ const Index = () => {
       const totalPremium = activePolicies.reduce((sum, p) => sum + Number(p.premium_amount), 0);
 
       return {
-        activePolicies: activePolicies.length,
-        expiredPolicies: expiredPolicies.length,
+        motorPolicies: motorPolicies.length,
+        healthPolicies: healthPolicies.length,
         upcomingRenewals: upcomingRenewals.length,
         totalPremium,
         upcomingRenewalsList: upcomingRenewals.slice(0, 5),
@@ -85,13 +88,18 @@ const Index = () => {
         </Button>
       </div>
 
-      {/* Dashboard Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <DashboardCard
-          title="Active Policies"
-          value={dashboardData?.activePolicies || 0}
-          icon={Shield}
-          className="border-success/20"
+          title="Total Motor Policies"
+          value={dashboardData?.motorPolicies || 0}
+          icon={Car}
+          className="border-primary/20"
+        />
+        <DashboardCard
+          title="Total Health Policies"
+          value={dashboardData?.healthPolicies || 0}
+          icon={Heart}
+          className="border-accent/20"
         />
         <DashboardCard
           title="Upcoming Renewals"
@@ -100,16 +108,10 @@ const Index = () => {
           className="border-warning/20"
         />
         <DashboardCard
-          title="Expired Policies"
-          value={dashboardData?.expiredPolicies || 0}
-          icon={CheckCircle}
-          className="border-destructive/20"
-        />
-        <DashboardCard
-          title="Total Premium (Annual)"
-          value={`$${dashboardData?.totalPremium?.toLocaleString() || 0}`}
-          icon={DollarSign}
-          className="border-primary/20"
+          title="Total Premium Paid"
+          value={formatINRSimple(dashboardData?.totalPremium || 0)}
+          icon={IndianRupee}
+          className="border-success/20"
         />
       </div>
 
@@ -155,10 +157,10 @@ const Index = () => {
                       variant="outline" 
                       className="mb-1 border-warning text-warning"
                     >
-                      Expires {format(new Date(policy.expiry_date), "MMM dd, yyyy")}
+                      Expires {formatDateDDMMYYYY(policy.expiry_date)}
                     </Badge>
                     <p className="text-sm text-muted-foreground">
-                      ${Number(policy.premium_amount).toLocaleString()}
+                      {formatINRSimple(Number(policy.premium_amount))}
                     </p>
                   </div>
                 </div>

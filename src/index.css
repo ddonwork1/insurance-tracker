@@ -8,7 +8,8 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 210 17% 98%;
+    /* App Background - Light theme */
+    --background: 210 20% 98%;
     --foreground: 213 31% 9%;
 
     --card: 0 0% 100%;
@@ -17,9 +18,10 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 213 31% 9%;
 
-    --primary: 214 84% 56%;
+    /* Primary Blue #1976D2 */
+    --primary: 207 90% 46%;
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 214 84% 48%;
+    --primary-hover: 207 90% 40%;
 
     --secondary: 210 16% 93%;
     --secondary-foreground: 213 31% 9%;
@@ -27,32 +29,39 @@ All colors MUST be HSL.
     --muted: 210 16% 93%;
     --muted-foreground: 213 19% 46%;
 
+    /* Financial Green - keep existing */
     --accent: 156 73% 59%;
     --accent-foreground: 0 0% 100%;
 
     --success: 142 76% 36%;
     --success-foreground: 0 0% 100%;
 
-    --warning: 38 92% 50%;
+    /* Amber #FFA000 */
+    --warning: 45 100% 50%;
     --warning-foreground: 0 0% 100%;
 
-    --destructive: 0 72% 51%;
+    /* Red #D32F2F */
+    --destructive: 354 70% 51%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 214 32% 91%;
     --input: 214 32% 91%;
-    --ring: 214 84% 56%;
+    --ring: 207 90% 46%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
-    /* Insurance app specific colors */
-    --trust-blue: 214 84% 56%;
-    --financial-green: 156 73% 59%;
-    --alert-red: 0 72% 51%;
-    --warning-amber: 38 92% 50%;
+    /* Admin App Specific Colors */
+    --admin-primary: 207 90% 46%;        /* #1976D2 */
+    --admin-amber: 45 100% 50%;          /* #FFA000 */
+    --admin-red: 354 70% 51%;            /* #D32F2F */
+    --admin-grey: 0 0% 62%;              /* #9E9E9E */
+    --app-background: 210 20% 98%;       /* #F5F7FA */
+    
+    /* Navbar - Semi-transparent white with blur */
+    --navbar-bg: 0 0% 100% / 0.85;
     
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(214 84% 56%), hsl(214 84% 48%));
+    --gradient-primary: linear-gradient(135deg, hsl(207 90% 46%), hsl(207 90% 40%));
     --gradient-success: linear-gradient(135deg, hsl(156 73% 59%), hsl(142 76% 36%));
     --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(210 16% 98%));
     

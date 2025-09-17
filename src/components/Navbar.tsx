@@ -1,13 +1,16 @@
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useUserProfile, useIsSuperAdmin } from "@/hooks/useUserProfile";
 import { 
   Shield, 
   LayoutDashboard, 
   FileText, 
   Plus, 
   LogOut,
-  User
+  User,
+  ScrollText,
+  Users
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -21,10 +24,14 @@ export const Navbar = () => {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const { data: profile } = useUserProfile();
+  const isSuperAdmin = useIsSuperAdmin();
 
   const navItems = [
     { path: "/", label: "Dashboard", icon: LayoutDashboard },
     { path: "/policies", label: "Policies", icon: FileText },
+    { path: "/logs", label: "Global Logs", icon: ScrollText },
+    ...(isSuperAdmin ? [{ path: "/users", label: "User Management", icon: Users }] : []),
   ];
 
   const isActive = (path: string) => {
@@ -34,9 +41,9 @@ export const Navbar = () => {
   };
 
   return (
-    <nav className="border-b bg-card shadow-card">
+    <nav className="fixed top-0 left-0 right-0 z-50 border-b bg-white/85 backdrop-blur-md shadow-sm">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-12">
           {/* Logo */}
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
@@ -83,6 +90,9 @@ export const Navbar = () => {
               <DropdownMenuContent align="end" className="w-56 shadow-dropdown">
                 <div className="px-2 py-1.5 text-sm">
                   <p className="font-medium">{user?.email}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {profile?.role === 'super_admin' ? 'Super Admin' : 'Admin'}
+                  </p>
                 </div>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => signOut()}>

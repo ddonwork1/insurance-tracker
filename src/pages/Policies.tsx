@@ -24,7 +24,8 @@ import {
   Trash2
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { format } from "date-fns";
+import { formatDateDDMMYYYY } from "@/lib/dateUtils";
+import { formatINRSimple } from "@/lib/currencyUtils";
 import { useToast } from "@/hooks/use-toast";
 
 const Policies = () => {
@@ -223,8 +224,8 @@ const Policies = () => {
                         <p className="text-sm text-muted-foreground">{policy.vehicle_details}</p>
                       )}
                       <div className="flex items-center gap-4 text-sm">
-                        <span>Premium: ${Number(policy.premium_amount).toLocaleString()}</span>
-                        <span>Expires: {format(new Date(policy.expiry_date), "MMM dd, yyyy")}</span>
+                         <span>Premium: {formatINRSimple(Number(policy.premium_amount))}</span>
+                         <span>Expires: {formatDateDDMMYYYY(policy.expiry_date)}</span>
                       </div>
                     </div>
                   </div>

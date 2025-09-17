@@ -10,6 +10,8 @@ import Auth from "./pages/Auth";
 import Policies from "./pages/Policies";
 import PolicyForm from "./pages/PolicyForm";
 import PolicyDetail from "./pages/PolicyDetail";
+import GlobalLogs from "./pages/GlobalLogs";
+import UserManagement from "./pages/UserManagement";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,6 +31,8 @@ const App = () => (
               <Route path="/policies/new" element={<PolicyForm />} />
               <Route path="/policies/:id" element={<PolicyDetail />} />
               <Route path="/policies/:id/edit" element={<PolicyForm />} />
+              <Route path="/logs" element={<GlobalLogs />} />
+              <Route path="/users" element={<UserManagement />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Layout>
