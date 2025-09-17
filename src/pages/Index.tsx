@@ -76,7 +76,7 @@ const Index = () => {
         <div>
           <h1 className="text-3xl font-bold">Dashboard</h1>
           <p className="text-muted-foreground">
-            Manage your insurance policies and stay on top of renewals
+            Manage insurance policies and track renewals
           </p>
         </div>
         <Button 
